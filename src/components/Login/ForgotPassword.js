@@ -139,13 +139,7 @@ function ForgotPassword() {
   return (
     <div className="forgotpass-container">
       <div className="forgot-containerpass">
-        <div className="forgot-container-logo">
-          <img
-            src="./images/logo[800x150].png"
-            height="50px"
-            alt="Bookshlf.in"
-          />
-        </div>
+        <div className="forgot-container-logo">BOOKSTORE</div>
         <div className="forgot-container-main">Password Recovery</div>
         <form className="signup-form">
           <div className="signup-email">

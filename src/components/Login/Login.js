@@ -113,7 +113,8 @@ function Login() {
         })
         .catch((error) => {
           if (error.response) {
-            HandelError(error.response.data.errors[0]);
+            // HandelError();
+            console.log(error.response);
           }
           setloader("none");
         });
@@ -203,10 +204,11 @@ function Login() {
                     <span style={{display: alert2}}>
                       <i className="fas fa-exclamation-circle"></i> {alertText2}
                     </span>
+                    <div className="login-form-forgot-password">
+                      <Link to="/ForgotPassword">Forgot Your Password ?</Link>
+                    </div>
                   </div>
-                  <div className="login-form-forgot-password">
-                    <Link to="/ForgotPassword">Forgot Your Password ?</Link>
-                  </div>
+
                   <div className="login-form-submit-button">
                     <button
                       onClick={(e) => {
@@ -235,8 +237,8 @@ function Login() {
                 <img
                   src="/images/smallLogo.svg"
                   alt="bookshlf.in"
-                  height="250px"
-                  width="250px"
+                  height="150px"
+                  width="150px"
                 />
               </div>
               <div className="login-container-right-container-register">
