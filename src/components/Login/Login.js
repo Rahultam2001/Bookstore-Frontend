@@ -82,7 +82,7 @@ function Login() {
           password: Password,
         })
         .then((response) => {
-          // console.log("Logged In", response);
+          console.log("Logged In", response);
           if (response.data.token) {
             axios.defaults.headers.common[
               "Authorization"
@@ -107,7 +107,7 @@ function Login() {
           });
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
-          setuserRole(response.data.roles.includes("customer"));
+          setuserRole(response.data.roles.includes("user"));
           setLog(false);
           setloader("none");
         })
