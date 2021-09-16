@@ -113,8 +113,8 @@ function Login() {
         })
         .catch((error) => {
           if (error.response) {
-            // HandelError();
-            console.log(error.response);
+            HandelError(error.response.data.errors[0]);
+            // console.log(error.response.data.errors[0]);
           }
           setloader("none");
         });

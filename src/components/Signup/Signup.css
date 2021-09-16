@@ -67,10 +67,11 @@
   font-family: "Roboto", sans-serif;
 }
 .signup-form h1 {
-  color: white;
+  color: rgb(253, 132, 76);
   font-size: 4em;
   margin-bottom: 20px;
-  letter-spacing: 2px;
+  font-family: "Staatliches", cursive;
+  letter-spacing: 10px;
   animation: flicker 1.5s infinite alternate;
 }
 .signup-name,

@@ -121,9 +121,7 @@ function Verify(props) {
   };
   return (
     <div className="forgotmain-container">
-      <div className="forgot-container-logo">
-        <img src="./images/logo[800x150].png" height="50px" alt="Bookshlf.in" />
-      </div>
+      <div className="forgot-container-logo">BOOKSTORE</div>
       <div className="forgot-container-main">Verify Your Account</div>
       <div className="forgot-container-email">
         <span>

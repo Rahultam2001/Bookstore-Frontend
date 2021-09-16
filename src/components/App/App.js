@@ -6,12 +6,14 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "./Carousel";
 import Categories from "./Categories";
-import BestSelling from "./BestSelling";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
 import UserSignup from "../Signup/UserSignup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
+import UserProfile from "../UserProfile/UserProfile";
+import Admin from "../AdminPanel/AdminPanel";
+
 function App() {
   return (
     <Router>
@@ -28,12 +30,25 @@ function App() {
             <Navbar />
             <Contact />
           </Route>
+          <Route path="/Contact">
+            <Navbar />
+            <Contact />
+          </Route>
+          <Route path="/UserProfile/:panel">
+            <Navbar />
+            <UserProfile />
+          </Route>
+          <Route path="/UserProfile/:panel">
+            <Navbar />
+            <UserProfile />
+          </Route>
+          <Route path="/Admin/:panel">
+            <Admin />
+          </Route>
           <Route path="/">
             <Navbar />
             <Carousel />
             <Categories />
-            <BestSelling />
-            {/* <Review /> */}
             <Footer />
           </Route>
         </Switch>
