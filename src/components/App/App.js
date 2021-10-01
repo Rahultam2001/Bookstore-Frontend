@@ -16,6 +16,7 @@ import SearchResult from "../SearchResult/AllCategories";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import Cart from "../Cart/Cart";
 import Wishlist from "../Cart/Wishlist";
+import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 
 function App() {
@@ -49,6 +50,10 @@ function App() {
           <Route path="/SellerPanel/:panel">
             <Navbar />
             <SellerPanel />
+          </Route>
+          <Route path="/BookDetails/:bookId">
+            <Navbar />
+            <BookDetails />
           </Route>
           <Route path="/Cart">
             <Navbar />
