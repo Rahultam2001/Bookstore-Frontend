@@ -42,52 +42,68 @@ export default function SellerRegister() {
 
   const handelRegister = () => {
     setload(true);
-    // const imageName = nanoid(10) + Photo.name;
+    const imageName = nanoid(10) + Photo.name;
 
     // uploading profile photo to firebase server with unique name
-    axios
-      .post("/sellerRegister", {
-        name: Name,
-        intro: Intro,
-        photo: Image,
-      })
-      .then((response) => {
-        setload(false);
-        seterr(false);
-        setmsg("Successfully registered as Seller!");
-        setalert(true);
-        user.roles.push("seller");
-        localStorage.setItem(
-          "bookstore_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            wishlist: user.wishlist,
-            cartitems: user.cartitems,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          wishlist: user.wishlist,
-          cartitems: user.cartitems,
-        });
-        setTimeout(() => {
-          history.push("/SellerPanel");
-        }, 2000);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(user);
-          setload(false);
-          seterr(true);
-          setmsg(`Registration Failed! ${error.response.data.error}`);
-          setalert(true);
-        }
-      });
+    const uploadTask = storage.ref(`profile/${imageName}`).put(Photo);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("profile")
+          .child(imageName)
+          .getDownloadURL()
+          .then((imgUrl) => {
+            axios
+              .post("/sellerRegister", {
+                name: Name,
+                intro: Intro,
+                photo: imgUrl,
+              })
+              .then((response) => {
+                setload(false);
+                seterr(false);
+                setmsg("Successfully registered as Seller!");
+                setalert(true);
+                user.roles.push("seller");
+                localStorage.setItem(
+                  "bookstore_user",
+                  JSON.stringify({
+                    authHeader: user.authHeader,
+                    roles: user.roles,
+                    email: user.email,
+                    wishlist: user.wishlist,
+                    cartitems: user.cartitems,
+                  })
+                );
+                setUser({
+                  authHeader: user.authHeader,
+                  roles: user.roles,
+                  email: user.email,
+                  wishlist: user.wishlist,
+                  cartitems: user.cartitems,
+                });
+                setTimeout(() => {
+                  history.push("/SellerPanel");
+                }, 2000);
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log(error.response.data);
+                  console.log(user);
+                  setload(false);
+                  seterr(true);
+                  setmsg(`Registration Failed! ${error.response.data.error}`);
+                  setalert(true);
+                }
+              });
+          });
+      }
+    );
   };
   return (
     <div>
@@ -107,6 +123,21 @@ export default function SellerRegister() {
         </Alert>
         <div className="seller-register-btn">Register Now as Seller</div>
         <form action="" className="seller-register-form">
+          <div>
+            <div className="uploaded-images">
+              <img src={Image} alt="profile" />
+            </div>
+            <div className="upload-btn-wrapper">
+              <button>Upload Image</button>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                onChange={(e) => {
+                  handelUpload(e);
+                }}
+              />
+            </div>
+          </div>
           <input
             type="text"
             id="contactName"

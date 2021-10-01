@@ -145,7 +145,7 @@ function Login() {
       if (curRole === "user") {
         history.push("/");
       } else if (curRole === "seller") {
-        history.push("/sellerPanel");
+        history.push("/SellerPanel/5");
       } else if (curRole === "admin") {
         history.push("/Admin/1");
       }
@@ -236,7 +236,7 @@ function Login() {
               <div className="login-container-right-container-logo">
                 <img
                   src="/images/smallLogo.svg"
-                  alt="bookshlf.in"
+                  alt=""
                   height="150px"
                   width="150px"
                 />

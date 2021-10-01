@@ -173,7 +173,7 @@ const SellerPanel = () => {
             ) : params.panel === "5" && Adr && user ? (
               <AddBook address={Adr} />
             ) : (
-              <Register />
+              <></>
             )}
           </div>
         )}

@@ -25,44 +25,45 @@ const UserProfile = () => {
       .then((response) => {
         setuserprofile(response.data);
         axios
-          .get("/getOrderList")
+          .get("/getAddressList")
           .then((response) => {
-            if (response.data) {
-              setactiveOrders(
-                response.data.filter((order) => {
-                  return (
-                    order.status[order.status.length - 1] !== "Cancelled" &&
-                    order.status[order.status.length - 1] !== "Delivered"
-                  );
-                })
-              );
-              setpastOrders(
-                response.data
-                  .filter((order) => {
-                    return (
-                      order.status[order.status.length - 1] === "Cancelled" ||
-                      order.status[order.status.length - 1] === "Delivered"
-                    );
-                  })
-                  .reverse()
-              );
-            }
-            axios
-              .get("/getAddressList")
-              .then((response) => {
-                response.data.sort((a, b) => {
-                  return a.updatedAt < b.updatedAt
-                    ? 1
-                    : a.updatedAt > b.updatedAt
-                    ? -1
-                    : 0;
-                });
-                setAdr(response.data);
-                setload(false);
-              })
-              .catch(() => {});
+            response.data.sort((a, b) => {
+              return a.updatedAt < b.updatedAt
+                ? 1
+                : a.updatedAt > b.updatedAt
+                ? -1
+                : 0;
+            });
+            setAdr(response.data);
+            setload(false);
           })
           .catch(() => {});
+        // axios
+        //   .get("/getOrderList")
+        //   .then((response) => {
+        //     if (response.data) {
+        //       setactiveOrders(
+        //         response.data.filter((order) => {
+        //           return (
+        //             order.status[order.status.length - 1] !== "Cancelled" &&
+        //             order.status[order.status.length - 1] !== "Delivered"
+        //           );
+        //         })
+        //       );
+        //       setpastOrders(
+        //         response.data
+        //           .filter((order) => {
+        //             return (
+        //               order.status[order.status.length - 1] === "Cancelled" ||
+        //               order.status[order.status.length - 1] === "Delivered"
+        //             );
+        //           })
+        //           .reverse()
+        //       );
+        //     }
+        //
+        //   })
+        //   .catch(() => {});
       })
       .catch(() => {});
   }, []);
