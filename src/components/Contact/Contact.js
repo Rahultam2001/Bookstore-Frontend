@@ -125,16 +125,15 @@ function Contact() {
       </div>
       <div className="contact-form">
         <h1>Contact Information</h1>
-        <h3>
+        <h3 style={{fontSize: "12px"}}>
           We will try our best to answer your questions as soon as possible.
         </h3>
         <br />
-        <h2>Social Media</h2>
         <div className="social-icons">
           <Link to="">
             <i className="fab fa-facebook-f" />
           </Link>
-          <Link to="https://www.instagram.com/_bookshlf/">
+          <Link to="">
             <i className="fab fa-instagram" />
           </Link>
           <Link to="">
@@ -143,14 +142,11 @@ function Contact() {
           <Link to="">
             <i className="fab fa-linkedin" />
           </Link>
-          <Link
-            to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ"
-            target="_blank"
-          >
+          <Link to="" target="_blank">
             <i className="fab fa-youtube" />
           </Link>
         </div>
-        <h1 style={{fontSize: "3em"}}> Get In Touch</h1>
+        <h1> Get In Touch</h1>
         <div className="contactForm">
           <form action="">
             <input
@@ -242,7 +238,6 @@ function Contact() {
           </Alert>
         </div>
       </div>
-      <hr />
     </div>
   );
 }

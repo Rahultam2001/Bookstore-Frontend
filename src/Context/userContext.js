@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 export const CurrentUserProvider = (props) => {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("bookshlf_user"))
+    JSON.parse(localStorage.getItem("bookstore_user"))
   );
 
   return (

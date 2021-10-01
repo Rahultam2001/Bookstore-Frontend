@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import "./Footer.css";
 import axios from "../../axios";
@@ -157,7 +157,7 @@ function Footer() {
           <div className="social-media-wrap">
             <div className="footer-logo">
               <Link to="/" className="social-logo">
-                <img src="/images/favicon.ico" alt="" height="50px" />
+                <img src="/images/favicon.ico" alt="" height="20px" />
                 &nbsp;BOOKSTORE
               </Link>
             </div>
@@ -254,7 +254,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-container3">
-        &copy; 2021 BookStore. All Rights Reserved
+        &copy; 2021 Bookstore. All Rights Reserved
       </div>
     </div>
   );

@@ -82,14 +82,14 @@ function Login() {
           password: Password,
         })
         .then((response) => {
-          console.log("Logged In", response);
+          // console.log("Logged In", response);
           if (response.data.token) {
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${response.data.token}`;
           }
           localStorage.setItem(
-            "bookshlf_user",
+            "bookstore_user",
             JSON.stringify({
               authHeader: `Bearer ${response.data.token}`,
               roles: response.data.roles,

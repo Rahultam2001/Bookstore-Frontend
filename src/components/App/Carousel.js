@@ -43,13 +43,17 @@ function Carousel() {
               <div className="inner">
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>
-                <button onClick={() =>{
-                  if(item.button === "Sell Now"){
-                    history.push("/SellerPanel");
-                  }else{
-                    history.push("/SearchResult")
-                  }
-                }}>{item.button}</button>
+                <button
+                  onClick={() => {
+                    if (item.button === "Sell Now") {
+                      history.push("/SellerPanel/5");
+                    } else {
+                      history.push("/SearchResult/books");
+                    }
+                  }}
+                >
+                  {item.button}
+                </button>
               </div>
             </div>
           ))}

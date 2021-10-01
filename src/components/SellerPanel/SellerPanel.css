@@ -1,0 +1,651 @@
+.SellerPanel-container {
+  background: whitesmoke;
+  min-height: calc(100vh - 60px);
+}
+.SellerPanel-navbar {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel-nav-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+}
+.panel-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  position: relative;
+  color: rgb(22, 22, 22);
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 5px;
+  border-bottom: 2px solid aliceblue;
+}
+.panel-item span,
+.panel-item p {
+  padding: 5px;
+}
+
+.panel-item:hover {
+  border-bottom: 2px solid rgb(22, 22, 22);
+  cursor: pointer;
+}
+
+/* Account Details CSS */
+.seller-profile-cont {
+  position: relative;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(to right, #2a0845, #6441a5);
+  display: flex;
+  justify-content: flex-start;
+  align-items: top;
+  flex-direction: column;
+}
+.seller-profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+.seller-profile-details span {
+  padding-top: 10px;
+}
+.seller-profile-details span i {
+  margin-right: 40px;
+}
+.seller-profile-details span b {
+  margin-left: 40px;
+}
+.seller-profile-img {
+  position: absolute;
+  left: 50%;
+  margin-left: -75px;
+  bottom: -75px;
+}
+.update-seller-profile {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+}
+.verify-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.seller-rating i {
+  letter-spacing: 5px;
+  color: yellow;
+}
+.books-sold b {
+  color: rgb(38, 255, 38);
+}
+
+/* Orders CSS */
+
+.orders-bg {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  position: relative;
+}
+.orders-details {
+  width: 100%;
+  padding: 10px;
+  overflow-x: auto;
+}
+.orders-details .active-orders-table {
+  overflow-x: auto;
+  margin: 0px;
+}
+.orders-filter form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.orders-filter .select-wrapper {
+  position: relative;
+  width: 250px;
+}
+.orders-filter .select-wrapper::after {
+  color: black;
+  content: "▾";
+  margin-right: 10px;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 24px;
+}
+.orders-filter .select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: white;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.orders-filter .select:focus {
+  color: black;
+  border: 1px solid rgb(55, 251, 55);
+}
+.orders-filter .select::-ms-expand {
+  display: none;
+}
+.orders-filter .select-wrapper .select option {
+  font-weight: bold;
+}
+p#alert-dialog-description {
+  font-weight: bold;
+}
+#alert-dialog-title h2.MuiTypography-h6 {
+  font-weight: bold;
+}
+/* Address CSS*/
+
+.address-bg {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 10px;
+}
+.address-form fieldset {
+  border-radius: 5px 5px 0px 0px;
+  border: 2px solid rgb(0, 0, 0);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.address-form fieldset legend {
+  padding: 10px;
+  font-family: "PT sans";
+  font-size: 20px;
+}
+.address-label {
+  width: 35%;
+  padding: 5px;
+}
+.address-desc {
+  width: 65%;
+  padding: 5px;
+}
+.address-zip {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+}
+.address-form .address-label select {
+  width: 100%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+.address-desc input {
+  width: 100%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  padding-left: 10px;
+}
+
+.address-form .address-zip select {
+  width: 35%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+.address-form .address-zip input {
+  width: 35%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  margin: 0px 10px;
+}
+.address-zip #state {
+  margin-left: 10px;
+}
+label.pincode {
+  font-family: "PT sans";
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -20px;
+  font-size: 14px;
+}
+.address-zip span {
+  width: 30%;
+}
+.address-zip #pincode {
+  width: 100%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  letter-spacing: 10px;
+  text-align: center;
+  margin: 0px;
+}
+.address-form .address-phoneNo {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+}
+.address-form .address-phoneNo span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: top;
+}
+.address-form .address-phoneNo span label {
+  font-family: "PT Sans";
+  font-size: 14px;
+  padding-left: 10px;
+}
+#country-code {
+  letter-spacing: 5px;
+  text-decoration: none;
+  height: 50px;
+  width: 100px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+#phone-no {
+  letter-spacing: 20px;
+  height: 50px;
+  width: 100%;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 20px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  margin-left: 10px;
+}
+.address-form button {
+  border-radius: 0px 0px 5px 5px;
+  margin-top: -2px;
+  border-left: 2px solid rgb(0, 0, 0);
+  border-right: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
+  font-family: "PT sans";
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background-color: rgb(8, 218, 8);
+}
+.address-form button:hover {
+  background-color: #2fbb04;
+  color: #fff;
+}
+.address-lists {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.address-lists table {
+  border-collapse: collapse;
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+  font-family: "PT sans";
+  font-size: 14px;
+}
+.address-lists table,
+th,
+td {
+  border: 2px solid rgb(0, 0, 0);
+}
+.address-lists th,
+td {
+  padding: 10px;
+}
+.address-lists td {
+  vertical-align: middle;
+  text-align: center;
+}
+.address-lists table th:nth-child(1) {
+  width: 100px;
+}
+.address-lists table th:nth-child(2) {
+  width: 150px;
+}
+.address-lists table th:nth-child(3) {
+  width: 300px;
+}
+.address-lists table th:nth-child(4) {
+  width: 150px;
+}
+.address-lists table th:nth-child(5) {
+  width: 150px;
+}
+.address-lists table th:nth-child(6) {
+  width: 150px;
+}
+.address-lists table th:nth-child(7) {
+  width: 150px;
+}
+.address-lists table th:nth-child(8) {
+  width: 50px;
+}
+
+i.fas.fa-window-close {
+  font-size: 60px;
+  cursor: pointer;
+  color: rgb(255, 93, 93);
+}
+i.fas.fa-window-close:hover {
+  color: rgb(230, 11, 11);
+}
+/* Seller Reviews And Rating Css */
+.seller-reviews {
+  padding: 30px;
+}
+.reviewed-title {
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  text-align: center;
+}
+
+.your-rating-as-seller {
+  width: 100%;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* Add Book CSS */
+
+.add-book-bg {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.add-book-bg h1 {
+  font-family: "PT sans";
+}
+.add-book-form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  color: #1b2735;
+}
+.add-book-field2,
+.add-book-field1 {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-book-form input {
+  height: 50px;
+  width: 500px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+.add-book-field2 input {
+  height: 50px;
+  width: 250px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+.add-book-field1 select {
+  width: 500px;
+}
+.add-book-form .add-book-field1 span,
+.add-book-form .add-book-field2 span {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #1b2735;
+  border: 1px solid white;
+}
+.add-book-field2 input:focus,
+.add-book-field1 input:focus {
+  border-bottom: 2px solid rgb(52, 248, 52);
+  background-color: white;
+  transition: 0.1s;
+}
+.add-book-field2 input:focus::placeholder,
+.add-book-field1 input:focus::placeholder {
+  letter-spacing: 2px;
+  color: rgb(241, 58, 58);
+  transition: 0.3s;
+}
+.add-book-field1 .tag::after {
+  background: whitesmoke;
+}
+.add-book-field1 .tag::before {
+  content: "❎";
+  background: transparent;
+  border-radius: 10px;
+  box-shadow: none;
+  height: 0px;
+  left: 5px;
+  position: absolute;
+  width: 0px;
+  top: 0px;
+}
+.seller-register-btn {
+  padding: 5px 15px;
+  background-color: #ff9b3e;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.seller-register-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgb(139, 139, 139);
+  margin: 10px;
+}
+
+.uploaded-images {
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.uploaded-images img {
+  max-height: 150px;
+  max-width: 250px;
+  min-height: 100px;
+  min-width: 100px;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper button {
+  border: 2px solid #ff9b3e;
+  color: #ff9b3e;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 280px;
+  height: 60px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 30px;
+  width: 200px;
+  height: 60px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-btn-wrapper span {
+  position: absolute;
+  top: 3px;
+  left: 40px;
+  color: red;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  cursor: pointer;
+}
+.update-book-bg {
+  float: left;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  z-index: 100;
+  background-color: whitesmoke;
+}
+.update-book-checkbox .MuiCheckbox-root {
+  color: #f50057;
+}
+@media screen and (max-width: 450px) {
+  .address-bg {
+    padding: 10px;
+  }
+  .address-form {
+    width: 100%;
+  }
+  .address-form fieldset {
+    flex-direction: column;
+  }
+  .address-form fieldset div {
+    width: 100%;
+  }
+  .address-zip {
+    flex-direction: column;
+    align-items: center;
+  }
+  .address-form .address-zip select,
+  .address-form .address-zip input {
+    width: 100%;
+  }
+  .address-zip #state {
+    margin-left: 0px;
+  }
+  .address-zip #state,
+  .address-zip #country,
+  .address-form .address-zip input {
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+  .address-form .address-zip input {
+    margin: 0px;
+  }
+  .address-zip span {
+    width: 100%;
+    margin-top: 10px;
+  }
+  #phone-no {
+    padding-left: 10px;
+    letter-spacing: 5px;
+    color: blue;
+  }
+  .address-lists {
+    overflow-x: scroll;
+    padding: 5px;
+    justify-content: flex-start;
+  }
+  .orders-details {
+    padding: 10px 0px;
+    overflow-x: auto;
+  }
+  .panel-nav-bg {
+    flex-direction: column;
+  }
+  .panel-item {
+    justify-content: flex-start;
+  }
+  .add-book-form {
+    padding: 0px;
+  }
+  .add-book-form input {
+    width: 250px;
+  }
+  .add-book-field2 input {
+    width: 125px;
+  }
+  .add-book-field1 select {
+    width: 250px;
+  }
+}

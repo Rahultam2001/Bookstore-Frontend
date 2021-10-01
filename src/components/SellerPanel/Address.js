@@ -132,7 +132,7 @@ const Address = (props) => {
 
   // const deleting the address
   const handelDeleteAddress = (e) => {
-    console.log(e.target.id);
+    setdeleteAdr(e.target.id);
     axios
       .delete("/deleteAddress", {
         data: {addressId: e.target.id},
@@ -175,13 +175,10 @@ const Address = (props) => {
   };
 
   return (
-    <div
-      className="address-bg"
-      style={{
-        background: "aliceblue",
-      }}
-    >
-      <h1 style={{color: "black", letterSpacing: "2px"}}>Your Addresses</h1>
+    <div className="address-bg">
+      <h1 style={{fontFamily: "PT sans", letterSpacing: "2px"}}>
+        Your Addresses
+      </h1>
 
       <form className="address-form">
         <fieldset>

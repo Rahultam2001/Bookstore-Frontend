@@ -14,7 +14,7 @@
 .sidenav-link {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 18px;
   color: #818181;
   transition: 0.3s;
   display: grid;
@@ -23,6 +23,9 @@
   align-self: center;
 }
 
+.sidenav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
 .sidenav-link i {
   align-self: center;
   justify-self: center;
@@ -69,7 +72,7 @@
 .Profile {
   display: none;
 }
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 1200px) {
   .Profile {
     display: grid;
   }

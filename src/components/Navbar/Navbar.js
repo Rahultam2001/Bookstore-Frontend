@@ -8,9 +8,9 @@ import SideNav from "./Sidenav.js";
 import {UserContext} from "../../Context/userContext";
 import axios from "../../axios.js";
 
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+const openNav = (e) => {
+  document.getElementById("mySidenav").style.width = "300px";
+};
 
 function Navbar() {
   const history = useHistory();
@@ -23,75 +23,69 @@ function Navbar() {
     msg: "Unsubscribe",
     color: "black",
   });
+
   useEffect(() => {
-    axios
-      .get("/countWishlistItems")
-      .then((response) => {
-        // console.log("wishlist: ", response.data.length);
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
+    // console.log(user);
+    if (user) {
+      axios
+        .get("/countWishlistItems")
+        .then((response) => {
+          // console.log(response);
+          localStorage.setItem(
+            "bookstore_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems,
+              wishlist: response.data.count,
+            })
+          );
+          setUser({
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
             cartitems: user.cartitems,
             wishlist: response.data.count,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems,
-          wishlist: response.data.count,
-        });
-      })
-      .catch((error) => {});
-    axios
-      .get("/countCartItems")
-      .then((response) => {
-        // console.log(response.data);
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
+          });
+        })
+        .catch((error) => {});
+      axios
+        .get("/countCartItems")
+        .then((response) => {
+          // console.log(response.data);
+          localStorage.setItem(
+            "bookstore_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: response.data.count,
+              wishlist: user.wishlist,
+            })
+          );
+          setUser({
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
             cartitems: response.data.count,
             wishlist: user.wishlist,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: response.data.count,
-          wishlist: user.wishlist,
-        });
-      })
-      .catch((error) => {});
+          });
+        })
+        .catch((error) => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = (e) => {
     if (e === "0") {
       setAnchorEl(null);
     }
-    if (e === "1") {
-      setAnchorEl(null);
-      history.push("/UserProfile/1");
-    } else if (e === "2") {
-      setAnchorEl(null);
-      history.push("/Cart");
-    } else if (e === "3") {
-      setAnchorEl(null);
-      history.push("/Wishlist");
-    } else if (e === "4") {
-      setAnchorEl(null);
-      history.push("/SellerPanel");
-    } else if (e === "5") {
+    if (e === "5") {
       setalert({
         show: true,
         msg: "Unsubscribing...",
@@ -133,12 +127,13 @@ function Navbar() {
         });
     }
   };
+
   const logout = () => {
     setLogged(false);
     axios
       .get("/signOut")
       .then((response) => {
-        localStorage.removeItem("bookshlf_user");
+        localStorage.removeItem("bookstore_user");
         delete axios.defaults.headers.common["Authorization"];
         console.log("Signed Out");
         setUser(null);
@@ -149,15 +144,16 @@ function Navbar() {
         console.log("Logout error", error);
       });
   };
+
   return (
     <div className="main-navbar" id="main-navbar">
       {/* navbar container starts */}
       <div className="navbar-container">
-        <span onClick={openNav} className="Sidenav-open">
+        <span onClick={(e) => openNav(e)} className="Sidenav-open">
           <i className="fas fa-bars"></i>
         </span>
         <SideNav />
-        <div className="navbar-logo">
+        <div className="navbar-logo" onClick={() => history.push("/")}>
           <img src="/images/favicon.ico" alt="" height="30px" />
           &nbsp; BOOKSTORE
         </div>
@@ -197,7 +193,7 @@ function Navbar() {
                 </div>
               </div>
             </li>
-            <Link to="/SellerPanel">
+            <Link to="/SellerPanel/5">
               <li>
                 <div className="navbar-items-chip">
                   <p>
@@ -269,7 +265,6 @@ function Navbar() {
                   <div>
                     <Button
                       variant="contained"
-                      color="secondary"
                       style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                       onClick={() => {
                         history.push("/Login");
@@ -286,10 +281,10 @@ function Navbar() {
                       onClick={handleClick}
                     >
                       <img
-                        src="/images/user.svg"
+                        src="/images/user.png"
                         alt="My Account"
-                        height="30px"
-                        width="30px"
+                        height="25px"
+                        width="25px"
                       />
                     </Button>
                     <Menu
@@ -297,14 +292,14 @@ function Navbar() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
+                      onClick={() => {
+                        handleClose("0");
+                      }}
                     >
                       <MenuItem
                         style={{
                           fontFamily: "PT Sans",
                           fontWeight: "bold",
-                        }}
-                        onClick={() => {
-                          handleClose("0");
                         }}
                       >
                         <i className="fas fa-times-circle" />
@@ -312,7 +307,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("1");
+                          history.push("/UserProfile/1");
                         }}
                       >
                         <i className="fas fa-user-alt" />
@@ -339,7 +334,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("2");
+                          history.push("/Cart");
                         }}
                       >
                         <i className="fas fa-cart-arrow-down" />
@@ -348,7 +343,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("3");
+                          history.push("/Wishlist");
                         }}
                       >
                         <i className="fas fa-heart" />
@@ -357,7 +352,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("4");
+                          history.push("/SellerPanel");
                         }}
                       >
                         <i className="fas fa-book" />
@@ -404,6 +399,16 @@ function Navbar() {
               </div>
             </li>
           </ul>
+        </div>
+        <div className="mobile-cart">
+          <div className="navbar-items-chip">
+            <Link to="/Cart" className="cart-icon">
+              <i className="fas fa-shopping-cart" />
+            </Link>
+            <p className="Cart-items-notify-bubble">
+              {user ? user.cartitems : 0}
+            </p>
+          </div>
         </div>
       </div>
     </div>

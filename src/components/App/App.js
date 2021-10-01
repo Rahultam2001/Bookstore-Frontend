@@ -12,6 +12,10 @@ import UserSignup from "../Signup/UserSignup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import UserProfile from "../UserProfile/UserProfile";
+import SearchResult from "../SearchResult/AllCategories";
+import SellerPanel from "../SellerPanel/SellerPanel";
+import Cart from "../Cart/Cart";
+import Wishlist from "../Cart/Wishlist";
 import Admin from "../AdminPanel/AdminPanel";
 
 function App() {
@@ -38,9 +42,21 @@ function App() {
             <Navbar />
             <UserProfile />
           </Route>
-          <Route path="/UserProfile/:panel">
+          <Route path="/SearchResult/:query">
             <Navbar />
-            <UserProfile />
+            <SearchResult />
+          </Route>
+          <Route path="/SellerPanel/:panel">
+            <Navbar />
+            <SellerPanel />
+          </Route>
+          <Route path="/Cart">
+            <Navbar />
+            <Cart />
+          </Route>
+          <Route path="/Wishlist">
+            <Navbar />
+            <Wishlist />
           </Route>
           <Route path="/Admin/:panel">
             <Admin />

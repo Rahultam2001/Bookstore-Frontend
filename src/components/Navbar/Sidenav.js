@@ -1,22 +1,23 @@
-import React, {useState} from "react";
+import {React, useState, useContext} from "react";
 import "./Sidenav.css";
 import {Link} from "react-router-dom";
 import SideNavLink from "./SideNavLink";
+import {UserContext} from "../../Context/userContext";
 
 export function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
-function Sidenav() {
+const Sidenav = () => {
   const [Search, setSearch] = useState("");
+  const [user] = useContext(UserContext);
 
   return (
     <div className="main-sidenav">
       <div id="mySidenav" className="sidenav">
-        <Link to="" className="closebtn" onClick={closeNav}>
+        <span className="closebtn" onClick={closeNav}>
           &times;
-        </Link>
-        {/* hidden until screen size is smaller than 650px */}
+        </span>
         <div className="sidenav-searchbar Profile">
           <input type="text" onChange={(e) => setSearch(e.target.value)} />
           <SideNavLink
@@ -24,27 +25,63 @@ function Sidenav() {
             iconClass="fas fa-search"
           />
         </div>
-        {/* ends here */}
         <SideNavLink to="/" label="Home" iconClass="fas fa-home" />
-        {/* hidden until screen size is smaller than 650px */}
         <SideNavLink
           to="/UserProfile/1"
           label="Profile"
           iconClass="fas fa-user-circle"
           isProfile={true}
         />
-        <SideNavLink
-          to="/Cart"
-          iconClass="fas fa-shopping-cart"
-          label="Cart"
-          isProfile={true}
-        />
-        {/* ends here */}
+        {user ? (
+          <SideNavLink to="/" iconClass="fas fa-sign-out-alt" label="Logout" />
+        ) : (
+          <SideNavLink
+            to="/Login"
+            iconClass="fas fa-sign-in-alt"
+            label="Login"
+          />
+        )}
+        {user ? (
+          <></>
+        ) : (
+          <SideNavLink
+            to="/Signup"
+            iconClass="fas fa-user-plus"
+            label="Create Account"
+          />
+        )}
+        {user ? (
+          <SideNavLink
+            to="/Cart"
+            iconClass="fas fa-shopping-cart"
+            label="Cart"
+          />
+        ) : (
+          <></>
+        )}
+        {user ? (
+          <SideNavLink
+            to="/Wishlist"
+            iconClass="far fa-heart"
+            label="Wishlist"
+          />
+        ) : (
+          <></>
+        )}
         <SideNavLink
           to="/SearchResult/books"
           label="All Categories"
           iconClass="fas fa-angle-right"
         />
+        {user ? (
+          <SideNavLink
+            to="/SellerPanel/5"
+            iconClass="fas fa-book"
+            label="Sell Your Books"
+          />
+        ) : (
+          <></>
+        )}
         <SideNavLink
           to="/Contribute"
           iconClass="fas fa-hands-helping"
@@ -56,6 +93,6 @@ function Sidenav() {
       </div>
     </div>
   );
-}
+};
 
 export default Sidenav;

@@ -6,6 +6,7 @@ import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
 import Address from "./Address";
 import axios from "../../axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const UserProfile = () => {
   const params = useParams();
@@ -75,6 +76,11 @@ const UserProfile = () => {
             setpanel("1");
             history.push("/UserProfile/1");
           }}
+          style={
+            panel === "1"
+              ? {borderBottom: "2px solid black"}
+              : {borderBottom: "2px solid aliceblue"}
+          }
         >
           <i className="fas fa-info-circle" />
           &nbsp;&nbsp;Account Details
@@ -85,6 +91,11 @@ const UserProfile = () => {
             setpanel("2");
             history.push("/UserProfile/2");
           }}
+          style={
+            panel === "2"
+              ? {borderBottom: "2px solid black"}
+              : {borderBottom: "2px solid aliceblue"}
+          }
         >
           <i className="fas fa-clipboard-list" />
           &nbsp;&nbsp;Active&nbsp;Orders
@@ -95,6 +106,11 @@ const UserProfile = () => {
             setpanel("3");
             history.push("/UserProfile/3");
           }}
+          style={
+            panel === "3"
+              ? {borderBottom: "2px solid black"}
+              : {borderBottom: "2px solid aliceblue"}
+          }
         >
           <i className="fas fa-clipboard-check" />
           &nbsp;&nbsp;Previous&nbsp;Orders
@@ -105,6 +121,11 @@ const UserProfile = () => {
             setpanel("4");
             history.push("/UserProfile/4");
           }}
+          style={
+            panel === "4"
+              ? {borderBottom: "2px solid black"}
+              : {borderBottom: "2px solid aliceblue"}
+          }
         >
           <i className="fas fa-map-marker" />
           &nbsp;&nbsp;Address
@@ -114,10 +135,7 @@ const UserProfile = () => {
         className="page-loader"
         style={{display: load ? "flex" : "none", height: "400px"}}
       >
-        <div
-          className="page-loading"
-          style={{display: load ? "block" : "none"}}
-        ></div>
+        <CircularProgress style={{height: "80px", width: "80px"}} />
       </div>
       <div
         className="Panel"
