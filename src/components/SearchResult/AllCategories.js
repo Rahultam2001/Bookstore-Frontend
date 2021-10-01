@@ -60,7 +60,9 @@ const AllCategories = () => {
           );
           settotalPages(response.data.totalPages);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error.response);
+        });
     };
     fetchdata();
   }, [params.query]);
