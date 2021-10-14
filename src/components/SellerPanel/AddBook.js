@@ -40,8 +40,8 @@ const AddBook = (props) => {
   const [link, setlink] = useState("");
   const [lang, setlang] = useState("");
   const [checked, setChecked] = useState(false);
-  const [Photo, setPhoto] = useState("");
-  const [Image, setImage] = useState("");
+  const [Photo, setPhoto] = useState([]);
+  const [Image, setImage] = useState([]);
   const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
