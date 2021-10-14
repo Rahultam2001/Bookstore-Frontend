@@ -1,11 +1,11 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./AllCategories.css";
-import {Link, useParams, useHistory} from "react-router-dom";
-import {UserContext} from "../../Context/userContext";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Alert
@@ -60,9 +60,7 @@ const AllCategories = () => {
           );
           settotalPages(response.data.totalPages);
         })
-        .catch((error) => {
-          console.log(error.response);
-        });
+        .catch((error) => {});
     };
     fetchdata();
   }, [params.query]);
@@ -109,7 +107,7 @@ const AllCategories = () => {
         e.target.className = "fas fa-circle-notch";
         e.target.style.animation = "spin 2s linear infinite";
         localStorage.setItem(
-          "bookstore_user",
+          "bookshlf_user",
           JSON.stringify({
             authHeader: user.authHeader,
             roles: user.roles,
@@ -128,7 +126,7 @@ const AllCategories = () => {
 
         axios
           .delete("/deleteWishlistItem", {
-            data: {bookId: e.target.id},
+            data: { bookId: e.target.id },
           })
           .then((response) => {
             // console.log(response.data);
@@ -144,7 +142,7 @@ const AllCategories = () => {
             e.target.style.animation = "";
             // console.log(err.response.data);
             localStorage.setItem(
-              "bookstore_user",
+              "bookshlf_user",
               JSON.stringify({
                 authHeader: user.authHeader,
                 roles: user.roles,
@@ -163,7 +161,7 @@ const AllCategories = () => {
           });
       } else {
         localStorage.setItem(
-          "bookstore_user",
+          "bookshlf_user",
           JSON.stringify({
             authHeader: user.authHeader,
             roles: user.roles,
@@ -198,7 +196,7 @@ const AllCategories = () => {
             e.target.className = "fas fa-heart";
             e.target.style.animation = "";
             localStorage.setItem(
-              "bookstore_user",
+              "bookshlf_user",
               JSON.stringify({
                 authHeader: user.authHeader,
                 roles: user.roles,
@@ -234,7 +232,7 @@ const AllCategories = () => {
         e.target.style.color = "white";
         e.target.style.borderRadius = "40px";
         localStorage.setItem(
-          "bookstore_user",
+          "bookshlf_user",
           JSON.stringify({
             authHeader: user.authHeader,
             roles: user.roles,
@@ -271,7 +269,7 @@ const AllCategories = () => {
         e.target.innerHTML = "Removing...";
         e.target.style = {};
         localStorage.setItem(
-          "bookstore_user",
+          "bookshlf_user",
           JSON.stringify({
             authHeader: user.authHeader,
             roles: user.roles,
@@ -289,7 +287,7 @@ const AllCategories = () => {
         });
         axios
           .delete("/deleteCartItem", {
-            data: {bookId: e.target.id},
+            data: { bookId: e.target.id },
           })
           .then((response) => {
             e.target.innerHTML = "Add to Cart";
@@ -425,7 +423,7 @@ const AllCategories = () => {
               )}
             </>
           ) : (
-            <CircularProgress style={{height: "50px", width: "50px"}} />
+            <CircularProgress style={{ height: "50px", width: "50px" }} />
           )}
         </div>
         {/* ======================================================== */}

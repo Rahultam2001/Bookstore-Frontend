@@ -18,6 +18,7 @@ import Cart from "../Cart/Cart";
 import Wishlist from "../Cart/Wishlist";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
+import BestSelling from "./BestSelling";
 
 function App() {
   return (

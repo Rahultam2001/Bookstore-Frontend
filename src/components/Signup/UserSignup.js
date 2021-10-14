@@ -1,9 +1,11 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./Signup.css";
 import "./Verify.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
 import Verify from "./Verify";
+import * as EmailValidator from "email-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const eye = {
   open: "far fa-eye",
@@ -44,41 +46,43 @@ function UserSignup() {
 
   // Signup handeling
   const handelSignUp = () => {
-    setLoading(true);
-    if (!Red.confirm) {
-      axios
-        .post("/signUp", {
-          name: FName + " " + LName,
-          email: Email,
-          password: Password,
-        })
-        .then((response) => {
-          console.log(response.data);
-          setStep(2);
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.response) {
-            handelError(error.response.data.errors[0]);
-          }
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+    if (EmailValidator.validate(Email)) {
+      setLoading(true);
+      if (!Red.confirm) {
+        axios
+          .post("/signUp", {
+            name: FName + " " + LName,
+            email: Email,
+            password: Password,
+          })
+          .then((response) => {
+            console.log(response.data);
+            setStep(2);
+            setLoading(false);
+          })
+          .catch((error) => {
+            if (error.response) {
+              handelError(error.response.data.errors[0]);
+            }
+            setLoading(false);
+          });
+      } else {
+        setLoading(false);
+      }
     }
   };
   const handelError = (e) => {
     const param = e.param;
     const msg = e.error;
     if (param === "name") {
-      makeRed({name: true});
-      setmessage({name: msg});
+      makeRed({ name: true });
+      setmessage({ name: msg });
     } else if (param === "email") {
-      makeRed({email: true});
-      setmessage({email: msg});
+      makeRed({ email: true });
+      setmessage({ email: msg });
     } else if (param === "password") {
-      makeRed({password: true});
-      setmessage({password: msg});
+      makeRed({ password: true });
+      setmessage({ password: msg });
     }
   };
   return (
@@ -86,9 +90,17 @@ function UserSignup() {
       {Step === 1 ? (
         <div className="signup-box">
           <div className="floating-login-button">
-            <Link to="/Login">Login</Link>
+            <Link to="/">
+              <i className="fas fa-home"></i>&nbsp;Home
+            </Link>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link to="/Login">
+              <i className="fas fa-sign-in-alt"></i>&nbsp;Login
+            </Link>
           </div>
-          <div className="signup-logo">BookStore</div>
+          <div className="signup-logo">
+            <img src="/images/favicon.ico" alt="" height="50px" />
+          </div>
 
           <form className="signup-form">
             <h1 className="neonText">Register</h1>
@@ -109,7 +121,11 @@ function UserSignup() {
                 onChange={(e) => setLName(e.target.value)}
                 value={LName}
               />
-              <b style={{display: Red.name ? "inline-block" : "none"}}>
+              <b
+                style={{
+                  display: Red.name ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.name}
               </b>
@@ -125,7 +141,11 @@ function UserSignup() {
                 value={Email}
                 style={Red.email ? Errorstyle : {}}
               />
-              <b style={{display: Red.email ? "inline-block" : "none"}}>
+              <b
+                style={{
+                  display: Red.email ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.email}
               </b>
@@ -154,7 +174,11 @@ function UserSignup() {
                   }
                 }}
               />
-              <b style={{display: Red.password ? "inline-block" : "none"}}>
+              <b
+                style={{
+                  display: Red.password ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.password}
               </b>
@@ -208,24 +232,22 @@ function UserSignup() {
               <span>
                 <i className="fas fa-user-plus" />
               </span>
-              <input
-                type="submit"
-                value="Sign Up"
+              <button
                 onClick={(e) => {
                   e.preventDefault();
                   handelSignUp();
                 }}
-              />
-              &nbsp;&nbsp;
-              <i
-                className="fas fa-circle-notch"
-                style={{
-                  display: !loading ? "none" : "inline-block",
-                  animation: "spin 2s linear infinite",
-                  color: "white",
-                  fontSize: "20px",
-                }}
-              />
+              >
+                SignUp&nbsp;&nbsp;&nbsp;
+                <CircularProgress
+                  style={{
+                    height: "15px",
+                    width: "15px",
+                    color: "white",
+                    display: loading ? "inline-block" : "none",
+                  }}
+                />
+              </button>
             </div>
           </form>
         </div>

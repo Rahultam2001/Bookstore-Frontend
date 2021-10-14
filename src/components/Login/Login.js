@@ -3,6 +3,7 @@ import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
 import {UserContext} from "../../Context/userContext";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const eye = {
   open: "far fa-eye",
@@ -10,21 +11,17 @@ const eye = {
 };
 
 const Errorstyle = {
-  border: "2px solid red",
-  color: "red",
+  borderBottom: "3px solid rgb(240, 39, 39)",
+  color: "rgb(240, 39, 39)",
 };
 function Login() {
   // context states
-  const [user, setUser] = useContext(UserContext);
+  const [, setUser] = useContext(UserContext);
   const history = useHistory();
 
   // login states
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
-  const [Log, setLog] = useState(true);
-  const [adminRole, setadminRole] = useState(false);
-  const [userRole, setuserRole] = useState(false);
-  const [sellerRole, setsellerRole] = useState(false);
 
   // other states
   const [show, setshow] = useState(eye.close);
@@ -36,16 +33,17 @@ function Login() {
   const [Red1, makeRed1] = useState(false);
   const [Red2, makeRed2] = useState(false);
   const [loader, setloader] = useState("none");
-  const [bigLoader, setBigLoader] = useState("none");
 
   // showing password and hiding
-  const handelClick = () => {
+  const handelClick = (e) => {
     if (show === eye.close) {
       setshow(eye.open);
       setval("text");
+      document.getElementById(e.target.id).style.color = "rgb(240, 39, 39)";
     } else {
       setshow(eye.close);
       setval("password");
+      document.getElementById(e.target.id).style.color = "rgb(53, 53, 53)";
     }
   };
 
@@ -60,12 +58,12 @@ function Login() {
   const handleDefaultError = () => {
     if (Name === "") {
       setalert1("block");
-      setalertText1("Please Fill Your Email.");
+      setalertText1("Please Fill Your Email");
       makeRed1(true);
     }
     if (Password === "") {
       setalert2("block");
-      setalertText2("Please Fill Your Password.");
+      setalertText2("Please Fill Your Password");
       makeRed2(true);
     }
   };
@@ -105,16 +103,15 @@ function Login() {
             cartitems: 0,
             wishlist: 0,
           });
-          setadminRole(response.data.roles.includes("admin"));
-          setsellerRole(response.data.roles.includes("seller"));
-          setuserRole(response.data.roles.includes("user"));
-          setLog(false);
-          setloader("none");
+
+          setTimeout(() => {
+            setloader("none");
+            history.push("/");
+          }, 5000);
         })
         .catch((error) => {
           if (error.response) {
             HandelError(error.response.data.errors[0]);
-            // console.log(error.response.data.errors[0]);
           }
           setloader("none");
         });
@@ -137,183 +134,123 @@ function Login() {
     }
   };
 
-  // Handeling User Role
-  const handleUserRole = (curRole) => {
-    setBigLoader("flex");
-    setTimeout(() => {
-      setBigLoader("none");
-      if (curRole === "user") {
-        history.push("/");
-      } else if (curRole === "seller") {
-        history.push("/SellerPanel/5");
-      } else if (curRole === "admin") {
-        history.push("/Admin/1");
-      }
-    }, 3000);
-  };
-
   return (
     <div className="login-bg">
-      {Log ? (
-        <div className="login-container">
-          {/* Left container in login container starts */}
-          <div className="login-container-left">
-            <div className="login-container-left-logo">BookStore</div>
-            <div className="login-container-left-main">
-              <h2> Login </h2>
-              <div className="login-container-left-main-form">
-                {/* Login form */}
-                <form autoComplete="off">
-                  <div className="login-form-email-lable">Email</div>
-                  <div className="login-form-email-input">
-                    <input
-                      type="email"
-                      value={Name}
-                      placeholder="yourname@email.com"
-                      autoComplete="off"
-                      onChange={(e) => setName(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          handelLogin();
-                        }
-                      }}
-                      style={Red1 ? Errorstyle : {}}
-                    />
-                    <span style={{display: alert1}}>
-                      <i className="fas fa-exclamation-circle"></i> {alertText1}
-                    </span>
-                  </div>
-                  <div className="login-form-password-lable">Password</div>
-                  <div className="login-form-password-input">
-                    <i className={show} id="eye" onClick={handelClick} />
-                    <input
-                      type={val}
-                      value={Password}
-                      placeholder="Password"
-                      autoComplete="off"
-                      onChange={(e) => setPassword(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          handelLogin();
-                        }
-                      }}
-                      style={Red2 ? Errorstyle : {}}
-                    />
-                    <span style={{display: alert2}}>
-                      <i className="fas fa-exclamation-circle"></i> {alertText2}
-                    </span>
-                    <div className="login-form-forgot-password">
-                      <Link to="/ForgotPassword">Forgot Your Password ?</Link>
-                    </div>
-                  </div>
-
-                  <div className="login-form-submit-button">
-                    <button
-                      onClick={(e) => {
+      <div className="login-container">
+        {/* Left container in login container starts */}
+        <div className="login-floating-nav">
+          <span
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            <i className="fas fa-home"></i>&nbsp;HOME
+          </span>
+        </div>
+        <div className="login-container-left">
+          <div className="login-container-left-logo">
+            <img src="/images/favicon.ico" height="70px" alt="Bookstore.in" />
+          </div>
+          <div className="login-container-left-main">
+            <h2> Login </h2>
+            <div className="login-container-left-main-form">
+              {/* Login form */}
+              <form autoComplete="off">
+                <div className="login-form-email-lable">Email</div>
+                <div className="login-form-email-input">
+                  <input
+                    type="email"
+                    value={Name}
+                    placeholder="yourname@email.com"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      makeRed1(false);
+                      setalert1("none");
+                      setalertText1("");
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
                         e.preventDefault();
                         handelLogin();
+                      }
+                    }}
+                    style={Red1 ? Errorstyle : {}}
+                  />
+                  <span
+                    style={{
+                      display: alert1,
+                    }}
+                  >
+                    <i className="fas fa-exclamation-circle"></i> {alertText1}
+                  </span>
+                </div>
+                <div className="login-form-password-lable">Password</div>
+                <div className="login-form-password-input">
+                  <i
+                    className={show}
+                    id="eye"
+                    onClick={(e) => handelClick(e)}
+                  />
+                  <input
+                    type={val}
+                    value={Password}
+                    placeholder="Password"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      makeRed2(false);
+                      setalert2("none");
+                      setalertText2("");
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handelLogin();
+                      }
+                    }}
+                    style={Red2 ? Errorstyle : {}}
+                  />
+                  <span
+                    style={{
+                      display: alert2,
+                    }}
+                  >
+                    <i className="fas fa-exclamation-circle"></i> {alertText2}
+                  </span>
+                </div>
+                <div className="login-form-forgot-password">
+                  <Link to="/ForgotPassword">Forgot Your Password ?</Link>
+                </div>
+                <div className="login-form-submit-button">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handelLogin();
+                    }}
+                  >
+                    Login
+                  </button>
+                  <div className="login-load" style={{display: loader}}>
+                    <CircularProgress
+                      style={{
+                        height: "20px",
+                        width: "20px",
                       }}
-                    >
-                      Login
-                      <div id="loading" style={{display: loader}}></div>
-                    </button>
+                    />
                   </div>
-                </form>
-                {/* Login Form Ends */}
-              </div>
+                  <span className="register">
+                    <Link to="/Signup">Create Account</Link>
+                    &nbsp; instead ?
+                  </span>
+                </div>
+              </form>
+              {/* Login Form Ends */}
             </div>
           </div>
-          {/* Left container ends here */}
-
-          <div
-            className="login-container-right"
-            style={{backgroundImage: `url(/images/login-city.svg)`}}
-          >
-            {/* right container in login container starts */}
-            <div className="login-container-right-container">
-              <div className="login-container-right-container-logo">
-                <img
-                  src="/images/smallLogo.svg"
-                  alt=""
-                  height="150px"
-                  width="150px"
-                />
-              </div>
-              <div className="login-container-right-container-register">
-                <div className="login-container-right-container-register-button">
-                  <div className="login-container-right-container-register-button-card">
-                    <div className="login-container-right-container-register-button-card-front">
-                      Don't Have An Account ?
-                    </div>
-                    <div className="login-container-right-container-register-button-card-back">
-                      <h2>
-                        <Link to="/Signup">Register</Link>
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Right Container ends here */}
-          </div>
         </div>
-      ) : (
-        <div className="login-as-bg">
-          <div className="login-as-loading-bg" style={{display: bigLoader}}>
-            <div id="loading"></div>
-          </div>
-          <h1>LOGIN AS</h1>
-          <div className="login-as-container">
-            {userRole ? (
-              <div
-                className="login-as-box"
-                onClick={() => {
-                  handleUserRole("user");
-                }}
-              >
-                <div className="login-as-box-img">
-                  <i className="fas fa-user-alt"></i>
-                </div>
-                <div className="login-as-box-title">USER</div>
-              </div>
-            ) : (
-              <div> </div>
-            )}
-            {sellerRole ? (
-              <div
-                className="login-as-box"
-                onClick={() => {
-                  handleUserRole("seller");
-                }}
-              >
-                <div className="login-as-box-img">
-                  <i className="fas fa-user-friends"></i>
-                </div>
-                <div className="login-as-box-title">SELLER</div>
-              </div>
-            ) : (
-              <div> </div>
-            )}
-            {adminRole ? (
-              <div
-                className="login-as-box"
-                onClick={() => {
-                  handleUserRole("admin");
-                }}
-              >
-                <div className="login-as-box-img">
-                  <i className="fas fa-user-cog"></i>
-                </div>
-                <div className="login-as-box-title">ADMIN</div>
-              </div>
-            ) : (
-              <div> </div>
-            )}
-          </div>
-        </div>
-      )}
+        {/* Left container ends here */}
+      </div>
     </div>
   );
 }

@@ -6,20 +6,20 @@ import Address from "./Address";
 import Reviews from "./SellerReviews";
 import AddBook from "./AddBook";
 import Register from "./SellerRegister";
-import {UserContext} from "../../Context/userContext";
 import {useHistory, useParams} from "react-router-dom";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {UserContext} from "../../Context/userContext";
 
 const SellerPanel = () => {
   // context states
-  const [user, setUser] = useContext(UserContext);
   const history = useHistory();
   const params = useParams();
-  // component states
-  const [panel, setPanel] = useState(params.panel);
-  const [role, setRole] = useState(false);
 
+  // component states
+  const [, setPanel] = useState(params.panel);
+  const [role, setRole] = useState(false);
+  const [user, setUser] = useContext(UserContext);
   // loader states
   const [loader, setloader] = useState(true);
   const [sellerDetails, setsellerDetails] = useState(null);
@@ -27,16 +27,16 @@ const SellerPanel = () => {
   const [bookDetails, setbookDetails] = useState(null);
   const [sellerId, setsellerId] = useState(null);
   const [sellerReview, setsellerReview] = useState(null);
+
   // getting sellerDetails
   useEffect(() => {
     const fetchData = async () => {
-      // console.log(user);
-      if (user.roles.includes("seller")) setRole(true);
       axios
         .get("/getSellerProfile")
         .then((response) => {
           setsellerDetails(response.data);
           setsellerId(response.data._id);
+          if (user.roles.includes("seller")) setRole(true);
           axios
             .get("/getAddressList")
             .then((response) => {
@@ -162,18 +162,18 @@ const SellerPanel = () => {
                 </div>
               </div>
             </div>
-            {params.panel === "1" && sellerDetails && user ? (
+            {params.panel === "1" && sellerDetails ? (
               <AccountDetails seller={sellerDetails} />
             ) : params.panel === "2" && bookDetails && Adr ? (
               <Orders books={bookDetails} address={Adr} />
-            ) : params.panel === "3" && Adr && user ? (
+            ) : params.panel === "3" && Adr ? (
               <Address address={Adr} />
-            ) : params.panel === "4" && sellerReview && user ? (
+            ) : params.panel === "4" && sellerReview ? (
               <Reviews reviews={sellerReview} />
-            ) : params.panel === "5" && Adr && user ? (
+            ) : params.panel === "5" && Adr ? (
               <AddBook address={Adr} />
             ) : (
-              <></>
+              <div></div>
             )}
           </div>
         )}

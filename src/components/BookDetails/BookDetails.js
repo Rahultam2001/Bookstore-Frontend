@@ -1,15 +1,16 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./BookDetails.css";
-import {Link, useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
-
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 // Alert
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -40,6 +41,11 @@ const BookDetails = (props) => {
 
   // loader states
   const [loader, setloader] = useState(true);
+  const [loadWishlist, setloadWishlist] = useState(false);
+  const [loadCart, setloadCart] = useState(false);
+
+  // maintain visibility state for showing alert when user is not logged in
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,14 +64,14 @@ const BookDetails = (props) => {
   // handeling wish list
   const handelWishList = (id) => {
     if (user) {
-      console.log(id);
       if (wishlist === false) {
+        setloadWishlist(true);
         axios
           .post("/addWishlistItem", {
             bookId: id,
           })
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setOpen(true);
             setSeverity("success");
             setAlert(response.data.msg);
@@ -87,12 +93,16 @@ const BookDetails = (props) => {
               cartitems: user.cartitems,
               wishlist: user.wishlist + 1,
             });
+            setloadWishlist(false);
           })
-          .catch((error) => {});
+          .catch((error) => {
+            setloadWishlist(false);
+          });
       } else {
+        setloadWishlist(true);
         axios
           .delete("/deleteWishlistItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -116,8 +126,11 @@ const BookDetails = (props) => {
               cartitems: user.cartitems,
               wishlist: user.wishlist - 1,
             });
+            setloadWishlist(false);
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setloadWishlist(false);
+          });
       }
     } else {
       setOpen(true);
@@ -129,6 +142,7 @@ const BookDetails = (props) => {
   const handelCart = (id) => {
     if (user) {
       if (cart === false) {
+        setloadCart(true);
         axios
           .post("/addCartItem", {
             bookId: id,
@@ -155,12 +169,16 @@ const BookDetails = (props) => {
               cartitems: user.cartitems + 1,
               wishlist: user.wishlist,
             });
+            setloadCart(false);
           })
-          .catch(() => {});
+          .catch(() => {
+            setloadCart(false);
+          });
       } else {
+        setloadCart(true);
         axios
           .delete("/deleteCartItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -184,8 +202,11 @@ const BookDetails = (props) => {
               cartitems: user.cartitems - 1,
               wishlist: user.wishlist,
             });
+            setloadCart(false);
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setloadCart(false);
+          });
       }
     } else {
       setOpen(true);
@@ -205,72 +226,113 @@ const BookDetails = (props) => {
   return (
     <div>
       {/* Loader */}
-      <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
-        <div
-          className="page-loading"
-          style={{display: loader ? "block" : "none"}}
-        ></div>
+      <div
+        className="page-loader"
+        style={{ display: loader ? "flex" : "none" }}
+      >
+        <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
 
       {/* Component */}
       {!loader ? (
-        <div className="book-details-bg">
-          <div
-            style={{display: loader ? "none" : "flex"}}
-            className="book-main-container"
-          >
-            <Booksnaps snaps={book.photos} video={book.embedVideo} />
-            <Bookfullsnap url={book.photos[0]} />
-            <BookDesc bookdetails={book} />
-          </div>
-          <div
-            className="book-purchase-container"
-            style={{display: loader ? "none" : "flex"}}
-          >
-            <div
-              className="wish-list"
-              onClick={() => {
-                handelWishList(bookId);
-              }}
-            >
-              <span>
-                <i className={wishlist ? "fas fa-heart" : "far fa-heart"}></i>
-              </span>
-              <input
-                type="submit"
-                value={wishlist ? "Remove from Wishlist" : "Add To Wishlist"}
-              />
+        <>
+          {book.status === "Deleted" && (
+            <div className="deleted-book-overlay">
+              <span className="deleted-book-content">Book not available</span>
             </div>
-            <div
-              className="add-to-cart"
-              onClick={() => {
-                handelCart(bookId);
-              }}
-            >
-              <span>
+          )}
+          <div className="book-details-bg">
+            <div className="book-main-container">
+              <Booksnaps snaps={book.photos} video={book.embedVideo} />
+              <Bookfullsnap url={book.photos[0]} />
+              <BookDesc bookdetails={book} />
+            </div>
+            <div className="book-purchase-container">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handelWishList(bookId);
+                }}
+                className="wishlist-btn"
+              >
+                <i className={wishlist ? "fas fa-heart" : "far fa-heart"} />
+                &nbsp;
+                {wishlist ? "Remove From Wishlist" : "Add To Wishlist"}
+                &nbsp;
+                <CircularProgress
+                  style={{
+                    height: "20px",
+                    width: "20px",
+                    color: "white",
+                    display: loadWishlist ? "inline-block" : "none",
+                  }}
+                />
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handelCart(bookId);
+                }}
+                className="addtocart-btn"
+              >
                 <i className="fas fa-cart-arrow-down" />
-              </span>
-              <input
-                type="submit"
-                value={cart ? "Remove from Cart" : "Add to Cart"}
-              />
-            </div>
-            <div
-              className="buy-now-button"
-              onClick={() => {
-                history.push(`/Checkout/${bookId}`);
-              }}
-            >
-              <span>
+                &nbsp;
+                {cart ? "Remove from Cart" : "Add to Cart"}
+                &nbsp;
+                <CircularProgress
+                  style={{
+                    height: "20px",
+                    width: "20px",
+                    color: "white",
+                    display: loadCart ? "inline-block" : "none",
+                  }}
+                />
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={() => {
+                  if (!user) {
+                    setShowLoginAlert(true);
+                  } else {
+                    history.push(`/Checkout/${bookId}`);
+                  }
+                }}
+                className="buynow-btn"
+              >
                 <i className="fas fa-shopping-basket" />
-              </span>
-              <input type="submit" value="Buy Now" />
-            </div>
-            <div className="recommened-tags">
+                &nbsp;Buy Now
+              </Button>
+              {showLoginAlert ? (
+                <Alert
+                  onClose={() => {
+                    setShowLoginAlert(false);
+                  }}
+                  severity="error"
+                  style={{ fontSize: "12px" }}
+                >
+                  Please{" "}
+                  <Link
+                    style={{
+                      color: "#fff",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      letterSpacing: "1px",
+                    }}
+                    to="/Login"
+                  >
+                    <u>Login</u>
+                  </Link>{" "}
+                  to purchase <b>"{book.title}"</b> book
+                </Alert>
+              ) : null}
+              {/* <div className="recommened-tags">
               <h3>Recommended Tags</h3>
+            </div> */}
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <></>
       )}

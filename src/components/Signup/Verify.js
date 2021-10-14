@@ -1,9 +1,10 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./Verify.css";
 import InputMask from "react-input-mask";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const lock = {
   open: "fas fa-lock-open",
@@ -121,7 +122,9 @@ function Verify(props) {
   };
   return (
     <div className="forgotmain-container">
-      <div className="forgot-container-logo">BOOKSTORE</div>
+      <div className="forgot-container-logo">
+        <img src="/images/favicon.ico" height="80px" alt="Bookshlf.in" />
+      </div>
       <div className="forgot-container-main">Verify Your Account</div>
       <div className="forgot-container-email">
         <span>
@@ -130,10 +133,10 @@ function Verify(props) {
         <input type="text" value={props.mail} disabled />
       </div>
       <div className="forgot-container-otp">
-        <span style={{height: "50px", width: "50px"}}>
+        <span style={{ height: "50px", width: "50px" }}>
           <i
             className={locked ? lock.close : lock.open}
-            style={{color: locked ? "rgb(8, 194, 8)" : "red"}}
+            style={{ color: locked ? "rgb(8, 194, 8)" : "red" }}
           />
         </span>
         <InputMask
@@ -142,51 +145,45 @@ function Verify(props) {
           alwaysShowMask="true"
           value={Otp}
           onChange={(e) => handelOtp(e)}
-          style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
+          style={{ color: locked ? "rgb(8, 194, 8)" : "blue" }}
         />
         <button onClick={handelSendOtp}>
-          Send Again&nbsp;&nbsp;
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: sendOtp ? "inline-block" : "none",
-              animation: "spin 2s linear infinite",
-            }}
-          />
+          {sendOtp ? "Sending..." : "Send OTP"}
         </button>
-        <div
-          id="send-otp-again-alert"
-          style={{display: showAlert ? "inline-block" : "none"}}
+      </div>
+      <div
+        id="send-otp-again-alert"
+        style={{ display: showAlert ? "inline-block" : "none" }}
+      >
+        <Alert
+          variant="outlined"
+          severity={Alerttype}
+          style={{
+            fontFamily: "PT Sans",
+            fontWeight: "bold",
+            color: alertColor,
+            fontSize: "12px",
+          }}
         >
-          <Alert
-            variant="outlined"
-            severity={Alerttype}
-            style={{
-              fontFamily: "PT Sans",
-              fontWeight: "bold",
-              color: alertColor,
-              fontSize: "12px",
-            }}
-          >
-            {alertText}
-          </Alert>
-        </div>
+          {alertText}
+        </Alert>
       </div>
       <div className="forgot-container-verify">
         <button onClick={handelVerify}>
           Verify&nbsp;&nbsp;
-          <i
-            className="fas fa-circle-notch"
+          <CircularProgress
             style={{
-              display: !verify ? "none" : "inline-block",
-              animation: "spin 2s linear infinite",
+              height: "15px",
+              width: "15px",
+              color: "white",
+              display: verify ? "inline-block" : "none",
             }}
           />
         </button>
       </div>
       <div className="verification-container-login">
         <button
-          style={{opacity: verified ? "1" : "0.4"}}
+          style={{ opacity: verified ? "1" : "0.4" }}
           onClick={() => {
             if (verified) {
               history.push("/Login");
